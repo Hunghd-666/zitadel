@@ -10,13 +10,6 @@ function getThemeToggleRoundness() {
   return getComponentRoundness("themeSwitch");
 }
 
-// Helper function to get card appearance styles for the theme switch wrapper
-function getThemeSwitchCardAppearance(): string {
-  const themeConfig = getThemeConfig();
-  const appearance = APPEARANCE_STYLES[themeConfig.appearance];
-  return appearance?.card || "bg-black/5 dark:bg-white/5"; // Fallback to current styling
-}
-
 // Helper function to get selected button styling for clear visibility
 function getSelectedButtonStyle(isSelected: boolean): string {
   const themeConfig = getThemeConfig();
@@ -42,7 +35,6 @@ export default function ThemeSwitch() {
   const { theme, setTheme } = useTheme();
   const themeMode = useThemeMode();
   const toggleRoundness = getThemeToggleRoundness();
-  const cardAppearance = getThemeSwitchCardAppearance();
 
   useEffect(() => {
     setMounted(true);
@@ -57,7 +49,7 @@ export default function ThemeSwitch() {
 
   // themeMode is AUTO (1) or UNSPECIFIED (0): show light, system, dark options
   return (
-    <div className={`flex space-x-1 p-1 ${toggleRoundness} ${cardAppearance}`}>
+    <div className="flex space-x-1">
       <button
         className={`flex h-8 w-8 flex-row items-center justify-center ${toggleRoundness} transition-colors ${getSelectedButtonStyle(theme === "light")}`}
         onClick={() => setTheme("light")}
