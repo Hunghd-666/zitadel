@@ -2,6 +2,7 @@
 
 import { handleServerActionResponse } from "@/lib/client-utils";
 import { sendLoginname } from "@/lib/server/loginname";
+import { AtSymbolIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import { LoginSettings } from "@zitadel/proto/zitadel/settings/v2/login_settings_pb";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -9,7 +10,6 @@ import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Alert } from "./alert";
 import { AutoSubmitForm } from "./auto-submit-form";
-import { BackButton } from "./back-button";
 import { Button, ButtonVariants } from "./button";
 import { TextInput } from "./input";
 import { Spinner } from "./spinner";
@@ -111,12 +111,38 @@ export function UsernameForm({
             autoFocus
             {...register("loginName", { required: t("required.loginName") })}
             label={inputLabel}
+            placeholder="you@labxgame.com"
+            prefixIcon={<AtSymbolIcon className="h-4 w-4" />}
             data-testid="username-text-input"
             suffix={hideSuffix ? undefined : suffix}
           />
-          {allowRegister && (
+        </div>
+
+        {error && (
+          <div className="py-4" data-testid="error">
+            <Alert>{error}</Alert>
+          </div>
+        )}
+        <div className="mt-4 w-full">
+          <Button
+            data-testid="submit-button"
+            type="submit"
+            className="!h-11 w-full justify-center text-[15px]"
+            variant={ButtonVariants.Primary}
+            disabled={loading || !formState.isValid}
+            onClick={handleSubmit((e) => submitLoginName(e, organization))}
+          >
+            {loading && <Spinner className="mr-2 h-5 w-5" />}
+            <Translated i18nKey="submit" namespace="loginname" />
+            <ArrowRightIcon className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+
+        {allowRegister && (
+          <p className="pt-6 text-center text-sm text-gray-600 dark:text-gray-400">
+            New here?{" "}
             <button
-              className="hover:text-primary-light-500 dark:hover:text-primary-dark-500 text-sm transition-all"
+              className="font-medium text-primary-light-500 transition-all hover:underline dark:text-primary-dark-500"
               onClick={() => {
                 const registerParams = new URLSearchParams();
                 if (organization) {
@@ -134,29 +160,8 @@ export function UsernameForm({
             >
               <Translated i18nKey="register" namespace="loginname" />
             </button>
-          )}
-        </div>
-
-        {error && (
-          <div className="py-4" data-testid="error">
-            <Alert>{error}</Alert>
-          </div>
+          </p>
         )}
-        <div className="mt-4 flex w-full flex-row items-center">
-          <BackButton data-testid="back-button" />
-          <span className="flex-grow"></span>
-          <Button
-            data-testid="submit-button"
-            type="submit"
-            className="self-end"
-            variant={ButtonVariants.Primary}
-            disabled={loading || !formState.isValid}
-            onClick={handleSubmit((e) => submitLoginName(e, organization))}
-          >
-            {loading && <Spinner className="mr-2 h-5 w-5" />}
-            <Translated i18nKey="submit" namespace="loginname" />
-          </Button>
-        </div>
       </form>
     </>
   );

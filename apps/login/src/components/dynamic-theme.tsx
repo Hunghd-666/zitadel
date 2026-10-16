@@ -52,40 +52,53 @@ export function DynamicTheme({
               <div className="relative mx-auto w-full max-w-[1100px] px-8 py-4">
                 <Card padding="p-0" className="overflow-hidden shadow-md">
                   <div className="flex min-h-[540px]">
-                    {/* Left side: labxgame brand panel — fixed brand art, independent of label policy */}
-                    <div className="relative flex w-2/5 flex-col overflow-hidden bg-gradient-to-b from-[#FF8A3D] via-[#E86A17] to-[#B84A06] p-8 lg:p-10">
-                      <PixelCluster className="absolute right-0 top-0" />
-                      <PixelCluster className="absolute bottom-0 left-0" mirrored />
-
-                      {/* TODO: replace with final logo asset once branding is decided */}
-                      <svg width="150" height="36" viewBox="0 0 150 36" role="img" aria-label="labxgame">
-                        <rect x="2" y="4" width="13" height="13" rx="3.5" fill="#FFFFFF" />
-                        <rect x="19" y="4" width="13" height="13" rx="3.5" fill="#FFFFFF" fillOpacity="0.75" />
-                        <rect x="2" y="20" width="13" height="13" rx="3.5" fill="#FFFFFF" fillOpacity="0.75" />
-                        <rect x="19" y="20" width="13" height="13" rx="3.5" fill="#FFFFFF" />
-                        <text
-                          x="42"
-                          y="25"
-                          fontFamily="Inter, Arial, Helvetica, sans-serif"
-                          fontSize="21"
-                          fontWeight="700"
-                          letterSpacing="-0.5"
-                          fill="#FFFFFF"
-                        >
-                          labxgame
-                        </text>
+                    {/* Left side: labxgame brand panel — orange/blue gradient art, independent of label policy */}
+                    <div
+                      className="relative flex w-[44%] flex-col overflow-hidden p-8 lg:p-10"
+                      style={{
+                        background:
+                          "radial-gradient(90% 70% at 0% 0%, rgba(43,95,227,0.95) 0%, rgba(43,95,227,0) 70%), radial-gradient(85% 65% at 0% 100%, rgba(37,99,235,0.9) 0%, rgba(37,99,235,0) 72%), linear-gradient(160deg, #FF8A3D 0%, #E86A17 55%, #F97316 100%)",
+                      }}
+                    >
+                      {/* faint concentric rings, bottom-left */}
+                      <svg
+                        className="absolute -bottom-20 -left-20 h-72 w-72 text-white/[0.08]"
+                        viewBox="0 0 200 200"
+                        fill="none"
+                        aria-hidden="true"
+                      >
+                        {[40, 70, 100, 130].map((r) => (
+                          <circle key={r} cx="100" cy="100" r={r} stroke="currentColor" strokeWidth="1.5" />
+                        ))}
                       </svg>
+                      <PixelScatter variant="panel" className="absolute bottom-10 right-8" />
 
-                      <div className="flex flex-1 items-center">
-                        <p className="relative max-w-[300px] text-2xl font-semibold leading-snug text-white">
-                          Secure access to every labxgame experience
+                      <div className="relative flex flex-1 flex-col items-center justify-center pb-12 text-center">
+                        {/* placeholder mark — replace with final logo asset once branding is decided */}
+                        <svg width="52" height="52" viewBox="0 0 52 52" fill="none" role="img" aria-label="labxgame">
+                          <rect
+                            x="11"
+                            y="11"
+                            width="30"
+                            height="30"
+                            rx="7"
+                            transform="rotate(45 26 26)"
+                            stroke="#FFFFFF"
+                            strokeWidth="4"
+                          />
+                          <rect x="20" y="20" width="12" height="12" rx="3" transform="rotate(45 26 26)" fill="#FFFFFF" />
+                        </svg>
+                        <span className="mt-1 text-[32px] font-semibold tracking-tight text-white">labxgame</span>
+                        <p className="mt-1 max-w-[250px] text-[15px] font-normal leading-relaxed text-white/90">
+                          Secure access to every labxgame experience.
                         </p>
                       </div>
                     </div>
 
                     {/* Right side: page title + form content, stacked */}
-                    <div className="flex flex-1 items-center justify-center p-6 lg:p-10">
-                      <div className="w-full max-w-[400px] space-y-6 text-left [&_h1]:!text-left [&_h1]:text-2xl [&_h1]:font-semibold [&_h1]:leading-snug">
+                    <div className="relative flex flex-1 items-center justify-center p-6 lg:p-10">
+                      <PixelScatter variant="form" className="absolute right-6 top-6" />
+                      <div className="w-full max-w-[400px] space-y-6 text-left [&_h1]:!text-left [&_h1]:text-[28px] [&_h1]:font-bold [&_h1]:leading-tight [&_h1]:tracking-tight">
                         {leftContent}
                         {hasLeftRightStructure && rightContent}
                       </div>
@@ -141,33 +154,41 @@ export function DynamicTheme({
 }
 
 /**
- * Decorative mosaic of small rounded squares for the brand panel corners.
- * `mirrored` flips the cluster so the same asset works top-right and bottom-left.
+ * Decorative scatter of small rounded squares. `panel` renders translucent
+ * white/peach squares for the orange brand panel; `form` renders the
+ * blue/orange mix for the top-right of the form column.
  */
-function PixelCluster({ className = "", mirrored = false }: { className?: string; mirrored?: boolean }) {
-  const cells: Array<[number, number, string, number]> = [
-    [2, 0, "#FFFFFF", 0.7],
-    [3, 0, "#4C7BF0", 0.6],
-    [1, 1, "#FFFFFF", 0.4],
-    [2, 1, "#FFB280", 0.7],
+function PixelScatter({ variant, className = "" }: { variant: "panel" | "form"; className?: string }) {
+  const panelCells: Array<[number, number, string, number]> = [
+    [5, 0, "#FFFFFF", 0.55],
+    [4, 0, "#FFD1A8", 0.5],
     [3, 1, "#FFFFFF", 0.65],
-    [0, 2, "#1F2937", 0.3],
-    [1, 2, "#FFFFFF", 0.6],
-    [2, 2, "#4C7BF0", 0.5],
-    [0, 3, "#FFFFFF", 0.55],
-    [1, 3, "#FFB280", 0.55],
+    [6, 1, "#FFFFFF", 0.45],
+    [4, 2, "#FFFFFF", 0.75],
+    [5, 2, "#FFD1A8", 0.6],
+    [2, 2, "#FFFFFF", 0.4],
+    [3, 3, "#FFD1A8", 0.7],
+    [6, 3, "#FFFFFF", 0.5],
+    [4, 4, "#FFFFFF", 0.65],
   ];
+  const formCells: Array<[number, number, string, number]> = [
+    [5, 0, "#2563EB", 0.95],
+    [4, 0, "#FFB280", 0.9],
+    [6, 0, "#3B82F6", 0.8],
+    [3, 1, "#93B4F5", 0.85],
+    [5, 1, "#2563EB", 0.85],
+    [4, 2, "#F97316", 0.9],
+    [2, 2, "#DBEAFE", 0.9],
+    [6, 2, "#7BA7F0", 0.7],
+    [3, 3, "#FDBA74", 0.75],
+    [1, 4, "#DBEAFE", 0.8],
+    [4, 4, "#FFE4CC", 0.85],
+  ];
+  const cells = variant === "panel" ? panelCells : formCells;
   return (
-    <svg
-      viewBox="0 0 96 96"
-      width="80"
-      height="80"
-      aria-hidden="true"
-      className={className}
-      style={mirrored ? { transform: "scale(-1,-1)" } : undefined}
-    >
+    <svg viewBox="0 0 182 130" width={variant === "panel" ? 160 : 150} aria-hidden="true" className={className}>
       {cells.map(([cx, cy, fill, opacity], i) => (
-        <rect key={i} x={cx * 24 + 3} y={cy * 24 + 3} width="18" height="18" rx="4" fill={fill} fillOpacity={opacity} />
+        <rect key={i} x={cx * 26 + 4} y={cy * 26 + 4} width="16" height="16" rx="4" fill={fill} fillOpacity={opacity} />
       ))}
     </svg>
   );

@@ -8,6 +8,7 @@ import { ChangeEvent, DetailedHTMLProps, forwardRef, InputHTMLAttributes, ReactN
 export type TextInputProps = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> & {
   label: string;
   suffix?: string;
+  prefixIcon?: ReactNode;
   placeholder?: string;
   defaultValue?: string;
   error?: string | ReactNode;
@@ -44,6 +45,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       placeholder,
       defaultValue,
       suffix,
+      prefixIcon,
       required = false,
       error,
       disabled,
@@ -63,10 +65,15 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         <span className={`mb-1 leading-3 ${error ? "text-warn-light-500 dark:text-warn-dark-500" : ""}`}>
           {label} {required && "*"}
         </span>
+        {prefixIcon && (
+          <span className="pointer-events-none absolute bottom-[22px] left-[10px] z-30 translate-y-1/2 text-gray-400">
+            {prefixIcon}
+          </span>
+        )}
         <input
           suppressHydrationWarning
           ref={ref}
-          className={styles(!!error, !!disabled, actualRoundness)}
+          className={clsx(styles(!!error, !!disabled, actualRoundness), prefixIcon && "pl-8")}
           defaultValue={defaultValue}
           required={required}
           disabled={disabled}
