@@ -49,11 +49,9 @@ export function DynamicTheme({
             const hasLeftRightStructure = childArray.length === 2;
 
             return (
-              <div className="relative mx-auto w-full max-w-[1100px] px-8 py-4">
-                <Card padding="p-0" className="overflow-hidden shadow-md">
-                  <div className="flex min-h-[540px]">
-                    {/* Left side: labxgame brand panel — orange/blue gradient art, independent of label policy */}
-                    <div className="labx-brand-panel relative flex w-[44%] flex-col overflow-hidden p-8 lg:p-10">
+              <div className="flex min-h-screen w-full bg-background-light-500 dark:bg-background-dark-500">
+                {/* Left side: labxgame brand panel — orange/blue gradient art, independent of label policy */}
+                <div className="labx-brand-panel relative flex w-[44%] flex-col overflow-hidden p-8 lg:p-10">
                       {/* faint concentric rings, bottom-left */}
                       <svg
                         className="absolute -bottom-20 -left-20 h-72 w-72 text-white/[0.08]"
@@ -89,16 +87,14 @@ export function DynamicTheme({
                       </div>
                     </div>
 
-                    {/* Right side: page title + form content, stacked */}
-                    <div className="relative flex flex-1 items-center justify-center p-6 lg:p-10">
-                      <PixelScatter variant="form" className="absolute right-6 top-6" />
-                      <div className="w-full max-w-[400px] space-y-6 text-left [&_h1]:!text-left [&_h1]:text-[28px] [&_h1]:font-bold [&_h1]:leading-tight [&_h1]:tracking-tight">
-                        {leftContent}
-                        {hasLeftRightStructure && rightContent}
-                      </div>
-                    </div>
+                {/* Right side: page title + form content, stacked */}
+                <div className="relative flex flex-1 items-center justify-center p-6 lg:p-10">
+                  <PixelScatter variant="form" className="absolute right-6 top-6" />
+                  <div className="w-full max-w-[400px] space-y-6 text-left [&_h1]:!text-left [&_h1]:text-[28px] [&_h1]:font-bold [&_h1]:leading-tight [&_h1]:tracking-tight">
+                    {leftContent}
+                    {hasLeftRightStructure && rightContent}
                   </div>
-                </Card>
+                </div>
               </div>
             );
           })()
