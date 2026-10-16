@@ -57,7 +57,7 @@ export function DynamicTheme({
                       className="relative flex w-[44%] flex-col overflow-hidden p-8 lg:p-10"
                       style={{
                         background:
-                          "radial-gradient(90% 70% at 0% 0%, rgba(43,95,227,0.95) 0%, rgba(43,95,227,0) 70%), radial-gradient(85% 65% at 0% 100%, rgba(37,99,235,0.9) 0%, rgba(37,99,235,0) 72%), linear-gradient(160deg, #FF8A3D 0%, #E86A17 55%, #F97316 100%)",
+                          "radial-gradient(130% 95% at 0% 0%, rgba(43,95,227,0.85) 0%, rgba(43,95,227,0.4) 35%, rgba(43,95,227,0) 78%), radial-gradient(120% 85% at 0% 100%, rgba(37,99,235,0.8) 0%, rgba(37,99,235,0.35) 40%, rgba(37,99,235,0) 78%), radial-gradient(95% 85% at 78% 42%, rgba(255,170,100,0.55) 0%, rgba(255,170,100,0) 72%), linear-gradient(165deg, #FF9A3D 0%, #F97316 45%, #DD5C0A 100%)",
                       }}
                     >
                       {/* faint concentric rings, bottom-left */}
@@ -159,36 +159,44 @@ export function DynamicTheme({
  * blue/orange mix for the top-right of the form column.
  */
 function PixelScatter({ variant, className = "" }: { variant: "panel" | "form"; className?: string }) {
-  const panelCells: Array<[number, number, string, number]> = [
-    [5, 0, "#FFFFFF", 0.55],
-    [4, 0, "#FFD1A8", 0.5],
-    [3, 1, "#FFFFFF", 0.65],
-    [6, 1, "#FFFFFF", 0.45],
-    [4, 2, "#FFFFFF", 0.75],
-    [5, 2, "#FFD1A8", 0.6],
-    [2, 2, "#FFFFFF", 0.4],
-    [3, 3, "#FFD1A8", 0.7],
-    [6, 3, "#FFFFFF", 0.5],
-    [4, 4, "#FFFFFF", 0.65],
+  // [x, y, size, fill, opacity] — free placement, mixed sizes, no fixed grid
+  const panelRects: Array<[number, number, number, string, number]> = [
+    [120, 6, 14, "#FFFFFF", 0.5],
+    [148, 18, 18, "#FFFFFF", 0.65],
+    [96, 24, 12, "#FFD1A8", 0.5],
+    [66, 40, 16, "#FFFFFF", 0.4],
+    [132, 44, 11, "#FFD1A8", 0.7],
+    [162, 56, 15, "#FFFFFF", 0.5],
+    [40, 62, 13, "#FFD1A8", 0.45],
+    [104, 68, 18, "#FFFFFF", 0.75],
+    [76, 86, 12, "#FFFFFF", 0.55],
+    [140, 90, 16, "#FFD1A8", 0.6],
+    [58, 104, 14, "#FFFFFF", 0.65],
+    [112, 108, 12, "#FFFFFF", 0.5],
   ];
-  const formCells: Array<[number, number, string, number]> = [
-    [5, 0, "#2563EB", 0.95],
-    [4, 0, "#FFB280", 0.9],
-    [6, 0, "#3B82F6", 0.8],
-    [3, 1, "#93B4F5", 0.85],
-    [5, 1, "#2563EB", 0.85],
-    [4, 2, "#F97316", 0.9],
-    [2, 2, "#DBEAFE", 0.9],
-    [6, 2, "#7BA7F0", 0.7],
-    [3, 3, "#FDBA74", 0.75],
-    [1, 4, "#DBEAFE", 0.8],
-    [4, 4, "#FFE4CC", 0.85],
+  const formRects: Array<[number, number, number, string, number]> = [
+    [128, 0, 16, "#2563EB", 0.95],
+    [102, 2, 12, "#FFB280", 0.9],
+    [150, 8, 18, "#3B82F6", 0.85],
+    [76, 12, 10, "#93B4F5", 0.8],
+    [120, 26, 14, "#F97316", 0.9],
+    [58, 30, 12, "#DBEAFE", 0.85],
+    [146, 38, 11, "#7BA7F0", 0.7],
+    [96, 44, 15, "#2563EB", 0.75],
+    [40, 58, 10, "#FDBA74", 0.7],
+    [70, 70, 12, "#DBEAFE", 0.75],
+    [118, 62, 9, "#FFE4CC", 0.85],
   ];
-  const cells = variant === "panel" ? panelCells : formCells;
+  const rects = variant === "panel" ? panelRects : formRects;
   return (
-    <svg viewBox="0 0 182 130" width={variant === "panel" ? 160 : 150} aria-hidden="true" className={className}>
-      {cells.map(([cx, cy, fill, opacity], i) => (
-        <rect key={i} x={cx * 26 + 4} y={cy * 26 + 4} width="16" height="16" rx="4" fill={fill} fillOpacity={opacity} />
+    <svg
+      viewBox={variant === "panel" ? "0 0 182 140" : "0 0 170 92"}
+      width={variant === "panel" ? 170 : 150}
+      aria-hidden="true"
+      className={className}
+    >
+      {rects.map(([x, y, size, fill, opacity], i) => (
+        <rect key={i} x={x} y={y} width={size} height={size} rx={Math.min(4, size / 3)} fill={fill} fillOpacity={opacity} />
       ))}
     </svg>
   );
