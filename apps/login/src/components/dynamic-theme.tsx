@@ -50,37 +50,41 @@ export function DynamicTheme({
 
             return (
               <div className="relative mx-auto w-full max-w-[1100px] px-8 py-4">
-                <Card>
-                  <div className="flex min-h-[400px]">
-                    {/* Left side: First child + branding */}
-                    <div className="from-primary-50 to-primary-100 dark:from-primary-900/20 dark:to-primary-800/20 flex w-1/2 flex-col justify-center bg-gradient-to-br p-4 lg:p-8">
-                      <div className="mx-auto max-w-[440px] space-y-8">
-                        {/* Logo and branding */}
-                        {branding && (
-                          <Logo
-                            lightSrc={branding.lightTheme?.logoUrl}
-                            darkSrc={branding.darkTheme?.logoUrl}
-                            height={150}
-                            width={150}
-                          />
-                        )}
+                <Card padding="p-0" className="overflow-hidden shadow-md">
+                  <div className="flex min-h-[540px]">
+                    {/* Left side: labxgame brand panel — fixed brand art, independent of label policy */}
+                    <div className="relative flex w-2/5 flex-col justify-between overflow-hidden bg-gradient-to-b from-[#FF8A3D] via-[#E86A17] to-[#B84A06] p-8 lg:p-10">
+                      <PixelCluster className="absolute right-0 top-0" />
+                      <PixelCluster className="absolute bottom-0 left-0" mirrored />
 
-                        {/* First child content (title, description) - only if we have left/right structure */}
-                        {hasLeftRightStructure && (
-                          <div className="flex flex-col items-start space-y-4 text-left">
-                            {/* Apply larger styling to the content */}
-                            <div className="space-y-6 [&_h1]:text-left [&_h1]:text-4xl [&_h1]:leading-tight [&_h1]:text-gray-900 [&_h1]:lg:text-4xl [&_h1]:dark:text-white [&_p]:text-left [&_p]:leading-relaxed [&_p]:text-gray-700 [&_p]:dark:text-gray-300">
-                              {leftContent}
-                            </div>
-                          </div>
-                        )}
-                      </div>
+                      {/* TODO: replace with final logo asset once branding is decided */}
+                      <svg width="150" height="36" viewBox="0 0 150 36" role="img" aria-label="labxgame">
+                        <rect x="2" y="4" width="13" height="13" rx="3.5" fill="#FFFFFF" />
+                        <rect x="19" y="4" width="13" height="13" rx="3.5" fill="#FFFFFF" fillOpacity="0.75" />
+                        <rect x="2" y="20" width="13" height="13" rx="3.5" fill="#FFFFFF" fillOpacity="0.75" />
+                        <rect x="19" y="20" width="13" height="13" rx="3.5" fill="#FFFFFF" />
+                        <text
+                          x="42"
+                          y="25"
+                          fontFamily="Inter, Arial, Helvetica, sans-serif"
+                          fontSize="21"
+                          fontWeight="700"
+                          letterSpacing="-0.5"
+                          fill="#FFFFFF"
+                        >
+                          labxgame
+                        </text>
+                      </svg>
+                      <p className="relative max-w-[300px] text-2xl font-semibold leading-snug text-white">
+                        Secure access to every labxgame experience
+                      </p>
                     </div>
 
-                    {/* Right side: Second child (form) or single child if old format */}
-                    <div className="flex w-1/2 items-center justify-center p-4 lg:p-8">
-                      <div className="w-full max-w-[440px]">
-                        <div className="space-y-6">{hasLeftRightStructure ? rightContent : leftContent}</div>
+                    {/* Right side: page title + form content, stacked */}
+                    <div className="flex flex-1 items-center justify-center p-6 lg:p-10">
+                      <div className="w-full max-w-[400px] space-y-6 [&_h1]:text-2xl [&_h1]:font-semibold [&_h1]:leading-snug">
+                        {leftContent}
+                        {hasLeftRightStructure && rightContent}
                       </div>
                     </div>
                   </div>
@@ -99,12 +103,12 @@ export function DynamicTheme({
               <div className="relative mx-auto w-full max-w-[440px] px-4 py-4">
                 <Card>
                   <div className="mx-auto flex flex-col items-center space-y-8">
-                    <div className="relative flex flex-row items-center justify-center">
+                    <div className="relative flex flex-row items-center justify-start">
                       {branding && (
                         <Logo
                           lightSrc={branding.lightTheme?.logoUrl}
                           darkSrc={branding.darkTheme?.logoUrl}
-                          height={150}
+                          height={40}
                           width={150}
                         />
                       )}
@@ -112,8 +116,8 @@ export function DynamicTheme({
 
                     {hasMultipleChildren ? (
                       <>
-                        {/* Title and description - center aligned */}
-                        <div className="mb-4 flex w-full flex-col items-center text-center">{titleContent}</div>
+                        {/* Title and description - left aligned */}
+                        <div className="mb-4 flex w-full flex-col items-start text-left">{titleContent}</div>
 
                         {/* Form content - left aligned */}
                         <div className="w-full">{formContent}</div>
@@ -130,5 +134,38 @@ export function DynamicTheme({
             );
           })()}
     </ThemeWrapper>
+  );
+}
+
+/**
+ * Decorative mosaic of small rounded squares for the brand panel corners.
+ * `mirrored` flips the cluster so the same asset works top-right and bottom-left.
+ */
+function PixelCluster({ className = "", mirrored = false }: { className?: string; mirrored?: boolean }) {
+  const cells: Array<[number, number, string, number]> = [
+    [2, 0, "#FFFFFF", 0.9],
+    [3, 0, "#4C7BF0", 0.8],
+    [1, 1, "#FFFFFF", 0.5],
+    [2, 1, "#FFB280", 0.9],
+    [3, 1, "#FFFFFF", 0.85],
+    [0, 2, "#1F2937", 0.35],
+    [1, 2, "#FFFFFF", 0.8],
+    [2, 2, "#4C7BF0", 0.65],
+    [0, 3, "#FFFFFF", 0.75],
+    [1, 3, "#FFB280", 0.7],
+  ];
+  return (
+    <svg
+      viewBox="0 0 96 96"
+      width="96"
+      height="96"
+      aria-hidden="true"
+      className={className}
+      style={mirrored ? { transform: "scale(-1,-1)" } : undefined}
+    >
+      {cells.map(([cx, cy, fill, opacity], i) => (
+        <rect key={i} x={cx * 24 + 3} y={cy * 24 + 3} width="18" height="18" rx="4" fill={fill} fillOpacity={opacity} />
+      ))}
+    </svg>
   );
 }
