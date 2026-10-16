@@ -53,7 +53,7 @@ export function DynamicTheme({
                 <Card padding="p-0" className="overflow-hidden shadow-md">
                   <div className="flex min-h-[540px]">
                     {/* Left side: labxgame brand panel — fixed brand art, independent of label policy */}
-                    <div className="relative flex w-2/5 flex-col justify-between overflow-hidden bg-gradient-to-b from-[#FF8A3D] via-[#E86A17] to-[#B84A06] p-8 lg:p-10">
+                    <div className="relative flex w-2/5 flex-col overflow-hidden bg-gradient-to-b from-[#FF8A3D] via-[#E86A17] to-[#B84A06] p-8 lg:p-10">
                       <PixelCluster className="absolute right-0 top-0" />
                       <PixelCluster className="absolute bottom-0 left-0" mirrored />
 
@@ -75,14 +75,17 @@ export function DynamicTheme({
                           labxgame
                         </text>
                       </svg>
-                      <p className="relative max-w-[300px] text-2xl font-semibold leading-snug text-white">
-                        Secure access to every labxgame experience
-                      </p>
+
+                      <div className="flex flex-1 items-center">
+                        <p className="relative max-w-[300px] text-2xl font-semibold leading-snug text-white">
+                          Secure access to every labxgame experience
+                        </p>
+                      </div>
                     </div>
 
                     {/* Right side: page title + form content, stacked */}
                     <div className="flex flex-1 items-center justify-center p-6 lg:p-10">
-                      <div className="w-full max-w-[400px] space-y-6 [&_h1]:text-2xl [&_h1]:font-semibold [&_h1]:leading-snug">
+                      <div className="w-full max-w-[400px] space-y-6 text-left [&_h1]:!text-left [&_h1]:text-2xl [&_h1]:font-semibold [&_h1]:leading-snug">
                         {leftContent}
                         {hasLeftRightStructure && rightContent}
                       </div>
@@ -116,8 +119,8 @@ export function DynamicTheme({
 
                     {hasMultipleChildren ? (
                       <>
-                        {/* Title and description - left aligned */}
-                        <div className="mb-4 flex w-full flex-col items-start text-left">{titleContent}</div>
+                        {/* Title and description - left aligned (h1 is text-center in globals.scss) */}
+                        <div className="mb-4 flex w-full flex-col items-start text-left [&_h1]:!text-left">{titleContent}</div>
 
                         {/* Form content - left aligned */}
                         <div className="w-full">{formContent}</div>
@@ -143,22 +146,22 @@ export function DynamicTheme({
  */
 function PixelCluster({ className = "", mirrored = false }: { className?: string; mirrored?: boolean }) {
   const cells: Array<[number, number, string, number]> = [
-    [2, 0, "#FFFFFF", 0.9],
-    [3, 0, "#4C7BF0", 0.8],
-    [1, 1, "#FFFFFF", 0.5],
-    [2, 1, "#FFB280", 0.9],
-    [3, 1, "#FFFFFF", 0.85],
-    [0, 2, "#1F2937", 0.35],
-    [1, 2, "#FFFFFF", 0.8],
-    [2, 2, "#4C7BF0", 0.65],
-    [0, 3, "#FFFFFF", 0.75],
-    [1, 3, "#FFB280", 0.7],
+    [2, 0, "#FFFFFF", 0.7],
+    [3, 0, "#4C7BF0", 0.6],
+    [1, 1, "#FFFFFF", 0.4],
+    [2, 1, "#FFB280", 0.7],
+    [3, 1, "#FFFFFF", 0.65],
+    [0, 2, "#1F2937", 0.3],
+    [1, 2, "#FFFFFF", 0.6],
+    [2, 2, "#4C7BF0", 0.5],
+    [0, 3, "#FFFFFF", 0.55],
+    [1, 3, "#FFB280", 0.55],
   ];
   return (
     <svg
       viewBox="0 0 96 96"
-      width="96"
-      height="96"
+      width="80"
+      height="80"
       aria-hidden="true"
       className={className}
       style={mirrored ? { transform: "scale(-1,-1)" } : undefined}
