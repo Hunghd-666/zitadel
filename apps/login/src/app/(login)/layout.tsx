@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import ThemeSwitch from "@/components/theme-switch";
 import { LANGS, getLanguage } from "@/lib/i18n";
 import { getServiceConfig } from "@/lib/service-url";
+import { getThemeConfig } from "@/lib/theme";
 import { getAllowedLanguages } from "@/lib/zitadel";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import type { Metadata } from "next";
@@ -29,6 +30,9 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const _headers = await headers();
   const { serviceConfig } = getServiceConfig(_headers);
+
+  // side-by-side layout renders a full-screen split page — no centered container
+  const isSideBySide = getThemeConfig().layout === "side-by-side";
 
   let languages = LANGS;
   try {
@@ -68,13 +72,23 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 <BackgroundWrapper
                   className={`bg-background-light-600 dark:bg-background-dark-600 relative flex min-h-screen flex-col justify-center`}
                 >
-                  <div className="relative mx-auto w-full max-w-[1100px] py-8">
-                    <div>{children}</div>
-                    <div className="mx-auto flex max-w-[440px] flex-row items-center justify-end space-x-4 px-4 py-4 md:max-w-full md:px-8">
-                      <LanguageSwitcher languages={languages} />
-                      <ThemeSwitch />
+                  {isSideBySide ? (
+                    <div className="relative w-full">
+                      <div>{children}</div>
+                      <div className="absolute bottom-4 right-6 z-10 flex flex-row items-center space-x-4">
+                        <LanguageSwitcher languages={languages} />
+                        <ThemeSwitch />
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    <div className="relative mx-auto w-full max-w-[1100px] py-8">
+                      <div>{children}</div>
+                      <div className="mx-auto flex max-w-[440px] flex-row items-center justify-end space-x-4 px-4 py-4 md:max-w-full md:px-8">
+                        <LanguageSwitcher languages={languages} />
+                        <ThemeSwitch />
+                      </div>
+                    </div>
+                  )}
                 </BackgroundWrapper>
               </LanguageProvider>
             </Suspense>
