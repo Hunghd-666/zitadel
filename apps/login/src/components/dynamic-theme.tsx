@@ -53,13 +53,7 @@ export function DynamicTheme({
                 <Card padding="p-0" className="overflow-hidden shadow-md">
                   <div className="flex min-h-[540px]">
                     {/* Left side: labxgame brand panel — orange/blue gradient art, independent of label policy */}
-                    <div
-                      className="relative flex w-[44%] flex-col overflow-hidden p-8 lg:p-10"
-                      style={{
-                        background:
-                          "radial-gradient(130% 95% at 0% 0%, rgba(43,95,227,0.85) 0%, rgba(43,95,227,0.4) 35%, rgba(43,95,227,0) 78%), radial-gradient(120% 85% at 0% 100%, rgba(37,99,235,0.8) 0%, rgba(37,99,235,0.35) 40%, rgba(37,99,235,0) 78%), radial-gradient(95% 85% at 78% 42%, rgba(255,170,100,0.55) 0%, rgba(255,170,100,0) 72%), linear-gradient(165deg, #FF9A3D 0%, #F97316 45%, #DD5C0A 100%)",
-                      }}
-                    >
+                    <div className="labx-brand-panel relative flex w-[44%] flex-col overflow-hidden p-8 lg:p-10">
                       {/* faint concentric rings, bottom-left */}
                       <svg
                         className="absolute -bottom-20 -left-20 h-72 w-72 text-white/[0.08]"

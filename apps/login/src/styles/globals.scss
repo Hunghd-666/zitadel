@@ -74,3 +74,22 @@ html {
     background-position: -200% 0;
   }
 }
+
+/* labxgame brand panel — orange base melting into white (light) / near-black (dark), soft blue accents */
+.labx-brand-panel {
+  background:
+    radial-gradient(130% 95% at 0% 0%, rgba(43, 95, 227, 0.85) 0%, rgba(43, 95, 227, 0.4) 35%, rgba(43, 95, 227, 0) 78%),
+    radial-gradient(120% 85% at 0% 100%, rgba(37, 99, 235, 0.8) 0%, rgba(37, 99, 235, 0.35) 40%, rgba(37, 99, 235, 0) 78%),
+    radial-gradient(95% 85% at 78% 42%, rgba(255, 190, 140, 0.6) 0%, rgba(255, 190, 140, 0) 72%),
+    radial-gradient(85% 75% at 100% 100%, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 68%),
+    linear-gradient(165deg, #ff9a3d 0%, #f97316 45%, #e8680f 100%);
+}
+
+.dark .labx-brand-panel {
+  background:
+    radial-gradient(130% 95% at 0% 0%, rgba(43, 95, 227, 0.55) 0%, rgba(43, 95, 227, 0.25) 35%, rgba(43, 95, 227, 0) 78%),
+    radial-gradient(120% 85% at 0% 100%, rgba(37, 99, 235, 0.5) 0%, rgba(37, 99, 235, 0.2) 40%, rgba(37, 99, 235, 0) 78%),
+    radial-gradient(95% 85% at 78% 42%, rgba(255, 140, 60, 0.25) 0%, rgba(255, 140, 60, 0) 72%),
+    radial-gradient(85% 75% at 100% 100%, rgba(12, 12, 12, 0.9) 0%, rgba(12, 12, 12, 0) 68%),
+    linear-gradient(165deg, #d96308 0%, #b34e08 45%, #7c2d12 100%);
+}
